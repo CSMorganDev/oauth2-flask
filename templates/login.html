@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Login</h3>
+    <div class="box">
+        <a class="is-primary" href="{{ url_for('login') }}">
+            <span class="icon-text" style="gap: 20px;">
+                <span class="icon">
+                <i class="fa-brands fa-github is-size-3"></i>
+                </span>
+                <span>Login with GitHub</span>
+            </span>
+        </a>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login With GitHub</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bulma.min.css') }}" />
+    <script src="https://kit.fontawesome.com/faadf16e48.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+      const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+      // listen for mqtt_message events
+    // when a new message is received, log and append the data to the page
+    socket.on('mqtt_message', function(data) {
+      console.log(data);
+        let door = data['payload'] === '0' ? 'open' : 'closed';
+        const text = $("<p></p>").text(`The door is: ${door}`).hide();
+        $('#subscribe_messages').append(text);
+        text.show('slow').delay(5000).hide('slow').queue(function() {
+            $(this).remove();
+        });
+    })
+      $('#fetch_sensor').on('click', function() {
+          fetch('http://' + document.domain + ':' + location.port + '/sensor');
+      })
+  });
+</script>
+</head>
+
+<body>
+    <section class="hero is-primary is-fullheight">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
